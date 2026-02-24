@@ -1,0 +1,7 @@
+{% extends "booking/base.html" %}
+{% block title %}خطا | وقت بگیر{% endblock %}
+{% block content %}
+<h1 class="error">خطا</h1>
+<p>{{ message }}</p>
+<a href="{% url 'booking:dashboard' %}" class="btn">بازگشت به داشبورد</a>
+{% endblock %}

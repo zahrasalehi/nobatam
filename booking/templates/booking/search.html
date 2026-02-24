@@ -1,0 +1,36 @@
+{% extends "booking/base.html" %}
+{% block title %}جستجو | وقت بگیر{% endblock %}
+{% block content %}
+<h1>جستجوی پزشک</h1>
+<form action="{% url 'booking:search' %}" method="get">
+    <input type="text" name="q" value="{{ query }}" placeholder="نام پزشک، تخصص، شهر...">
+    <button type="submit" class="btn">جستجو</button>
+</form>
+
+{% if results is not None %}
+    {% if results %}
+        <p>نتایج برای «{{ query }}»:</p>
+        <ul>
+            {% for item in results %}
+                <li>
+                    {% with provider_id=item.id|default:item.provider_id|default:item.user_id %}
+                    {% if provider_id %}
+                        <strong>{{ item.name|default:item.title|default:item.display_name|default:"پزشک" }}</strong>
+                        {% if item.expertise or item.speciality %}({{ item.expertise|default:item.speciality|default:"" }}){% endif %}
+                        <form action="{% url 'booking:book_first_available' %}" method="post" style="display:inline; margin-right:0.5rem;">
+                            {% csrf_token %}
+                            <input type="hidden" name="provider_id" value="{{ provider_id }}">
+                            <button type="submit" class="btn">رزرو اولین نوبت موجود</button>
+                        </form>
+                    {% else %}
+                        <span>{{ item }}</span>
+                    {% endif %}
+                    {% endwith %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>نتیجه‌ای یافت نشد.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

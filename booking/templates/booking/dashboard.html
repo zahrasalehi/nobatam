@@ -1,0 +1,11 @@
+{% extends "booking/base.html" %}
+{% block title %}داشبورد | وقت بگیر{% endblock %}
+{% block content %}
+<h1>داشبورد</h1>
+<p>پزشک مورد نظر را جستجو کنید، سپس «رزرو اولین نوبت موجود» را بزنید.</p>
+<form action="{% url 'booking:search' %}" method="get">
+    <label for="q">جستجو (نام پزشک، تخصص، شهر و...):</label><br>
+    <input type="text" id="q" name="q" placeholder="مثال: دکتر احمدی تهران">
+    <button type="submit" class="btn">جستجو</button>
+</form>
+{% endblock %}

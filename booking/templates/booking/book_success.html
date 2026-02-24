@@ -1,0 +1,17 @@
+{% extends "booking/base.html" %}
+{% block title %}نوبت ثبت شد | وقت بگیر{% endblock %}
+{% block content %}
+<h1>نوبت با موفقیت ثبت شد</h1>
+{% if appointment %}
+    <p>جزئیات نوبت در پنل پذیرش۲۴ شما قابل مشاهده است.</p>
+    {% if appointment.start_time or appointment.from_iso %}
+        <p>زمان: {{ appointment.start_time|default:appointment.from_iso }}</p>
+    {% endif %}
+    {% if appointment.reference_code %}
+        <p>کد پیگیری: {{ appointment.reference_code }}</p>
+    {% endif %}
+{% else %}
+    <p>نوبت شما ثبت شد.</p>
+{% endif %}
+<a href="{% url 'booking:dashboard' %}" class="btn">بازگشت به داشبورد</a>
+{% endblock %}
